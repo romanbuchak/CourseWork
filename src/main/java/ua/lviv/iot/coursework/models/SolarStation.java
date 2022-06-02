@@ -1,4 +1,4 @@
-package models;
+package ua.lviv.iot.coursework.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,8 @@ public class SolarStation {
         return "ID, Type, Power, Capacity, TimeOfUsingPanels, Address, ProductCapacity";
     }
     public String toCSV(){
-        return String.format("%s, %s, %s, %s, %s, %s" , getId(), getType(), getPower(), getCapacity(), getTimeOfUsingPanels(), getAddress(), getProductionCapacity());
+        return String.format("%s, %s, %s, %s, %s, %s, %s" , getId(), getType(), getPower(), getCapacity(), getTimeOfUsingPanels(),
+                getAddress(), getProductionCapacity());
     }
 
 }

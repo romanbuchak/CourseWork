@@ -1,24 +1,21 @@
-package rest;
+package ua.lviv.iot.coursework.rest;
 
-import models.SolarStation;
+import ua.lviv.iot.coursework.models.SolarStation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.SolarStationService;
+import ua.lviv.iot.coursework.service.SolarStationService;
 
 import java.util.Collection;
 
 @RestController
 @RequestMapping("api/solar")
 
-public class SolarStationController {
-    private final SolarStationService solarService;
-
+public record SolarStationController(SolarStationService solarService) {
     @Autowired
-    public SolarStationController(SolarStationService solarService) {
-        this.solarService = solarService;
+    public SolarStationController {
     }
 
     @PostMapping

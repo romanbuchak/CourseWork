@@ -1,6 +1,6 @@
-package service;
+package ua.lviv.iot.coursework.service;
 
-import models.SolarStation;
+import ua.lviv.iot.coursework.models.SolarStation;
 
 import java.util.Collection;
 
