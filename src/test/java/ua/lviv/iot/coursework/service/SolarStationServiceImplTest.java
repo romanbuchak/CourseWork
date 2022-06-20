@@ -20,11 +20,9 @@ public class SolarStationServiceImplTest {
     @InjectMocks
     SolarStationServiceImpl solarStationService;
     private SolarStation station = new SolarStation();
-    private Collection<SolarStation> solarStations = new HashSet<>();
+    private final Collection<SolarStation> solarStations = new HashSet<>();
     Collection<SolarStation> actual;
-    private String testFileName = "test-Solar-file%s.csv";
     private static Integer fileIdentifier = 0;
-    //сценарії тестування
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -38,6 +36,7 @@ public class SolarStationServiceImplTest {
                 .withType("Static");
 
         solarStations.add(station);
+        String testFileName = "test-Solar-file%s.csv";
         actual = solarStationService.create(solarStations, String.format(testFileName, fileIdentifier), false);
     }
 

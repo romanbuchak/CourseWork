@@ -3,7 +3,6 @@ package ua.lviv.iot.coursework.service;
 import org.springframework.util.Assert;
 import ua.lviv.iot.coursework.models.SolarStation;
 import org.springframework.stereotype.Service;
-
 import javax.management.OperationsException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +32,7 @@ public class SolarStationServiceImpl implements SolarStationService {
             throw new Exception("Exist file with name" + fileName + " try update your file");
         }
 
-        String writerResPath = String.format("%s%s%s", "C:\\Users\\Admin\\Desktop\\JavaIoT\\coursework\\src\\main\\resources\\templates", File.separator, fileName);
+        String writerResPath = String.format("%s%s%s", "src\\main\\resources\\templates", File.separator, fileName);
 
         try (FileWriter writer = new FileWriter(writerResPath)) {
             String lastClassName = "";
@@ -96,7 +95,7 @@ public class SolarStationServiceImpl implements SolarStationService {
 
         if (getAllRecords() != null) {
 
-            solarStation = getAllRecords().stream().filter(station -> station.getId() == id).findFirst();
+            solarStation = getAllRecords().stream().filter(station -> station.getId().equals(id)).findFirst();
         } else {
             throw new Exception("Not found station with id:" + id);
         }
@@ -224,8 +223,7 @@ public class SolarStationServiceImpl implements SolarStationService {
     }
 
     private List<File> getAllFiles() {
-
-        List<File> files = Arrays.asList(Objects.requireNonNull(new File("C:\\Users\\Admin\\Desktop\\JavaIoT\\coursework\\src\\main\\resources\\templates").listFiles()));
+        List<File> files = Arrays.asList(Objects.requireNonNull(new File("src\\main\\resources\\templates").listFiles()));
         if (files.isEmpty()) {
             return null;
         } else {

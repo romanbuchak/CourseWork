@@ -14,7 +14,7 @@ public class SolarStationController {
     private  final SolarStationService solarStationService;
 
     @Autowired
-    public SolarStationController(final SolarStationService solarStationService) {
+    public SolarStationController( SolarStationService solarStationService) {
         this.solarStationService = solarStationService;
     }
 
