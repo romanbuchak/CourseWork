@@ -23,3 +23,20 @@ To run the program you need:
 - copy the path to the target folder
 - run the command cd + path to target
 - run it using java -jar + path to jar file
+
+**Collection of Rest queries**
+
+**Post**
+api/solar
+
+**getById**
+api/solar/{id}
+
+**getAll**
+api/solar
+
+**deleteById**
+api/solar/{id}
+
+**update**
+api/solar/{id}

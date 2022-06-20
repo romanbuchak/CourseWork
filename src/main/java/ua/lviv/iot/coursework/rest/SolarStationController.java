@@ -38,7 +38,7 @@ public class SolarStationController {
         solarStationService.deleteById(stationId);
     }
 
-    @PutMapping()
+    @PutMapping("/{id}")
     public final void update(@RequestBody final SolarStation station) throws Exception {
         solarStationService.update(station);
     }
