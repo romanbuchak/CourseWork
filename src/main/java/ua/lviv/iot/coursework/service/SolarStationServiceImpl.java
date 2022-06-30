@@ -1,6 +1,7 @@
 package ua.lviv.iot.coursework.service;
 
 import org.springframework.util.Assert;
+import ua.lviv.iot.coursework.Exception.SolarStationNotFoundException;
 import ua.lviv.iot.coursework.models.SolarStation;
 import org.springframework.stereotype.Service;
 import javax.management.OperationsException;
@@ -29,7 +30,7 @@ public class SolarStationServiceImpl implements SolarStationService {
         }
 
         if (existFileByName(fileName)) {
-            throw new Exception("Exist file with name" + fileName + " try update your file");
+            throw new Exception("Exist file with name " + fileName + " try update your file");
         }
 
         String writerResPath = String.format("%s%s%s", "src\\main\\resources\\templates", File.separator, fileName);
@@ -73,17 +74,13 @@ public class SolarStationServiceImpl implements SolarStationService {
 
         stations.remove(stationFromFiles);
 
-
-
         stations.add(actualSolarStation);
-
 
         if (file.delete()) {
             create(stations, file.getName(), true);
         } else {
             throw new OperationsException("Cannot delete file:" + file.getName());
         }
-
 
         return actualSolarStation;
     }
@@ -97,14 +94,16 @@ public class SolarStationServiceImpl implements SolarStationService {
 
             solarStation = getAllRecords().stream().filter(station -> station.getId().equals(id)).findFirst();
         } else {
+
             throw new Exception("Not found station with id:" + id);
         }
 
         return solarStation.get();
+
     }
 
     @Override
-    public final Collection<SolarStation> getAll() throws FileNotFoundException {
+    public final Collection<SolarStation> getAll() throws SolarStationNotFoundException {
 
         return getAllRecords();
     }
@@ -124,7 +123,7 @@ public class SolarStationServiceImpl implements SolarStationService {
     }
 
 
-    public final Integer getLastId() throws FileNotFoundException {
+    public final Integer getLastId() throws SolarStationNotFoundException {
         OptionalInt biggestId;
         if (getAllRecords() != null) {
             biggestId = getAllRecords().stream().mapToInt(SolarStation::getId).max();
@@ -135,7 +134,7 @@ public class SolarStationServiceImpl implements SolarStationService {
     }
 
 
-    private Collection<SolarStation> getAllRecords() throws FileNotFoundException {
+    private Collection<SolarStation> getAllRecords() throws SolarStationNotFoundException {
 
         List<File> files = getAllFiles();
         if (files == null) {

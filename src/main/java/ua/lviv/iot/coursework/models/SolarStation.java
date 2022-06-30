@@ -28,4 +28,5 @@ public class SolarStation {
         return String.format("%s, %s, %s, %s, %s, %s, %s", getId(), getType(), getPower(), getCapacity(), getTimeOfUsingPanels(),
                 getAddress(), getProductionCapacity());
     }
+
 }

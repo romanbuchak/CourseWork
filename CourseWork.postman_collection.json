@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "4fa26a83-e28f-4b8f-a422-27191b0328f2",
+		"name": "CourseWork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21224220"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n   [\r\n        {\r\n            \"id\":1,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/solar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"solar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n        {\r\n            \"id\":5,\r\n            \"type\": \"Fit\",\r\n            \"power\": 10002.0,\r\n            \"capacity\": 1.0,\r\n            \"timeOfUsingPanels\": 1,\r\n            \"address\": \"Linkolna 1\",\r\n            \"productionCapacity\": 1.0\r\n        }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/solar?addStation=false&fileDate=2022-06-05",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"solar"
+					],
+					"query": [
+						{
+							"key": "addStation",
+							"value": "false"
+						},
+						{
+							"key": "fileDate",
+							"value": "2022-06-05"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get station by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n   [\r\n        {\r\n            \"id\":1,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/solar/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"solar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all stations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n   [\r\n        {\r\n            \"id\":1,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/solar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"solar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete solar by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n   [\r\n        {\r\n            \"id\":1,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"type\": \"type\",\r\n            \"power\": 15.0,\r\n            \"capacity\": 100.0,\r\n            \"timeOfUsingPanels\": 100,\r\n            \"address\": \"Linkolna 100\",\r\n            \"productionCapacity\": 1.0\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/solar/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"solar",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
