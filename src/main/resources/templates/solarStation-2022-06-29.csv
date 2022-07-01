@@ -1,0 +1,4 @@
+ID, Type, Power, Capacity, TimeOfUsingPanels, Address, ProductCapacity
+5, type, 14.0, 75.0, 100, Linkolna 100, 1.0
+
+6, type, 15.0, 100.0, 200, Zelena 43, 3.0

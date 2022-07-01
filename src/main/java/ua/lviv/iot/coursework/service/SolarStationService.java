@@ -2,7 +2,6 @@ package ua.lviv.iot.coursework.service;
 
 import ua.lviv.iot.coursework.models.SolarStation;
 
-import java.io.FileNotFoundException;
 import java.util.Collection;
 
 public interface SolarStationService {
@@ -11,9 +10,9 @@ public interface SolarStationService {
 
     SolarStation update(SolarStation solar) throws Exception;
 
-    SolarStation getById(Integer id) throws Exception;
+    SolarStation getById(Integer id);
 
-    Collection<SolarStation> getAll() throws FileNotFoundException;
+    Collection<SolarStation> getAll();
 
     SolarStation deleteById(Integer id) throws Exception;
 }

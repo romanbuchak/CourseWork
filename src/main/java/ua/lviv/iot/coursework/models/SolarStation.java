@@ -1,15 +1,12 @@
 package ua.lviv.iot.coursework.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @With
-
+@Getter
 public class SolarStation {
     private Integer id;
     private String type;

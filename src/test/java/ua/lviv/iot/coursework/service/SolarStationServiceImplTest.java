@@ -8,17 +8,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.lviv.iot.coursework.models.SolarStation;
-import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.HashSet;
 
-
 @ExtendWith(MockitoExtension.class)
+
 
 public class SolarStationServiceImplTest {
 
     @InjectMocks
     SolarStationServiceImpl solarStationService;
+    SolarStationServiceStorage storage;
     private SolarStation station = new SolarStation();
     private final Collection<SolarStation> solarStations = new HashSet<>();
     Collection<SolarStation> actual;
@@ -51,7 +51,7 @@ public class SolarStationServiceImplTest {
     }
 
     @Test
-    void getSolarStationById() throws Exception {
+    void getSolarStationById() {
         SolarStation actual = solarStationService.getById(station.getId());
         Assertions.assertNotNull(actual);
         org.assertj.core.api.Assertions.assertThat(actual)
@@ -61,7 +61,7 @@ public class SolarStationServiceImplTest {
     }
 
     @Test
-    void getAllSolars() throws FileNotFoundException {
+    void getAllSolars() {
         Collection<SolarStation> solars = solarStationService.getAll();
         Assertions.assertNotNull(solars);
         Assertions.assertFalse(solars.isEmpty());
@@ -69,7 +69,7 @@ public class SolarStationServiceImplTest {
 
     @Test
     void updateById() throws Exception {
-        Integer lastId = solarStationService.getLastId();
+        Integer lastId = storage.getLastId();
         SolarStation stationFromCsv = solarStationService.getById(lastId);
         stationFromCsv.setPower(555.0);
         solarStationService.update(stationFromCsv);
