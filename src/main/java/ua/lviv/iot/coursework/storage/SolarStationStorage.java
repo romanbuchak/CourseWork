@@ -1,4 +1,4 @@
-package ua.lviv.iot.coursework.service;
+package ua.lviv.iot.coursework.storage;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class SolarStationServiceStorage {
+public class SolarStationStorage {
 
     private final Map<Integer, SolarStation> stations;
     private int lastId;
@@ -21,7 +21,7 @@ public class SolarStationServiceStorage {
     private final String filesFolder;
     private final String fileNamePrefix;
 
-    public SolarStationServiceStorage() {
+    public SolarStationStorage() {
         this.filesFolder = "src\\main\\resources\\templates";
         this.fileNamePrefix = "solarStation-";
 
@@ -29,12 +29,18 @@ public class SolarStationServiceStorage {
         this.lastId = getLastId(stations);
     }
 
-    protected SolarStationServiceStorage(String filesFolder, String fileNamePrefix) {
+    public SolarStationStorage(String filesFolder, String fileNamePrefix) {
         this.filesFolder = filesFolder;
         this.fileNamePrefix = fileNamePrefix;
 
         this.stations = readAllStationsOnInit();
         this.lastId = getLastId(stations);
+    }
+
+    public SolarStationStorage(Map<Integer, SolarStation> stations, String filesFolder, String fileNamePrefix) {
+        this.stations = stations;
+        this.filesFolder = filesFolder;
+        this.fileNamePrefix = fileNamePrefix;
     }
 
     private Map<Integer, SolarStation> readAllStationsOnInit() {

@@ -4,16 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ua.lviv.iot.coursework.models.SolarStation;
+import ua.lviv.iot.coursework.storage.SolarStationStorage;
+
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 
 
 @Service
 public class SolarStationServiceImpl implements SolarStationService {
-    private final SolarStationServiceStorage storage;
+    private final SolarStationStorage storage;
 
 @Autowired
-    public SolarStationServiceImpl(SolarStationServiceStorage storage) {
+    public SolarStationServiceImpl(SolarStationStorage storage) {
         this.storage = storage;
     }
 

@@ -3,12 +3,14 @@ package ua.lviv.iot.coursework.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ua.lviv.iot.coursework.models.SolarStation;
+import ua.lviv.iot.coursework.storage.SolarStationStorage;
+
 import java.util.Collection;
 import java.util.List;
 
 public class SolarStationServiceImplTest {
 
-    SolarStationServiceStorage storage = new SolarStationServiceStorage("src\\test\\resources", "solarStationTest-");
+    SolarStationStorage storage = new SolarStationStorage("src\\test\\resources", "solarStationTest-");
     SolarStationServiceImpl solarStationService = new SolarStationServiceImpl(storage);
 
     @Test
