@@ -1,12 +1,15 @@
 package ua.lviv.iot.coursework.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @With
-@Getter
+
 public class SolarStation {
     private Integer id;
     private String type;
@@ -16,7 +19,6 @@ public class SolarStation {
     private String address;
     private Double productionCapacity;
 
-
     public static String obtainHeaders() {
         return "ID, Type, Power, Capacity, TimeOfUsingPanels, Address, ProductCapacity";
     }
@@ -25,5 +27,4 @@ public class SolarStation {
         return String.format("%s, %s, %s, %s, %s, %s, %s", getId(), getType(), getPower(), getCapacity(), getTimeOfUsingPanels(),
                 getAddress(), getProductionCapacity());
     }
-
 }

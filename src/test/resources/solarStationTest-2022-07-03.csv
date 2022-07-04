@@ -1,0 +1,5 @@
+ID, Type, Power, Capacity, TimeOfUsingPanels, Address, ProductCapacity
+1, Static, 500.0, 150.0, 15200, Bandery 1, 123.0
+2, Static, 100.0, 150.0, 15200, Bandery 1, 123.0
+3, Static, 555.0, 150.0, 15200, Bandery 1, 123.0
+4, Static, 1500.0, 150.0, 15200, Bandery 1, 123.0

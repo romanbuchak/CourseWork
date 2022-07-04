@@ -1,33 +1,20 @@
 package ua.lviv.iot.coursework.service;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import ua.lviv.iot.coursework.models.SolarStation;
 import java.util.Collection;
-import java.util.HashSet;
-
-@ExtendWith(MockitoExtension.class)
-
+import java.util.List;
 
 public class SolarStationServiceImplTest {
 
-    @InjectMocks
-    SolarStationServiceImpl solarStationService;
-    SolarStationServiceStorage storage;
-    private SolarStation station = new SolarStation();
-    private final Collection<SolarStation> solarStations = new HashSet<>();
-    Collection<SolarStation> actual;
-    private static Integer fileIdentifier = 0;
+    SolarStationServiceStorage storage = new SolarStationServiceStorage("src\\test\\resources", "solarStationTest-");
+    SolarStationServiceImpl solarStationService = new SolarStationServiceImpl(storage);
 
-    @BeforeEach
-    void beforeEach() throws Exception {
-        fileIdentifier++;
-        station = station.withAddress("Bandery 1")
+    @Test
+    void createSolarStationCollection() throws Exception {
+        SolarStation station = new SolarStation()
+                .withAddress("Bandery 1")
                 .withCapacity(150.0)
                 .withId(1)
                 .withPower(1500.0)
@@ -35,48 +22,79 @@ public class SolarStationServiceImplTest {
                 .withTimeOfUsingPanels(15200L)
                 .withType("Static");
 
-        solarStations.add(station);
-        String testFileName = "test-Solar-file%s.csv";
-        actual = solarStationService.create(solarStations, String.format(testFileName, fileIdentifier), false);
-    }
+        Collection<SolarStation> created = solarStationService.create(List.of(station));
 
-    @AfterEach
-    void afterEach() {
-        solarStations.clear();
+        Assertions.assertEquals(created.size(), 1);
+        Assertions.assertEquals(created.stream().findFirst().get(), station);
+
     }
 
     @Test
-    void createSolarStationCollection() {
-        Assertions.assertEquals(solarStations.size(), actual.size());
-    }
+    void getSolarStationById() throws Exception {
+        SolarStation station = new SolarStation()
+                .withAddress("Bandery 1")
+                .withCapacity(150.0)
+                .withId(1)
+                .withPower(500.0)
+                .withProductionCapacity(123.0)
+                .withTimeOfUsingPanels(15200L)
+                .withType("Static");
 
-    @Test
-    void getSolarStationById() {
+        solarStationService.create(List.of(station));
+
         SolarStation actual = solarStationService.getById(station.getId());
         Assertions.assertNotNull(actual);
         org.assertj.core.api.Assertions.assertThat(actual)
                 .usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(station);
+
+        //solarStationService.deleteById(station.getId());
     }
 
     @Test
-    void getAllSolars() {
+    void getAllSolars() throws Exception {
+        SolarStation station = new SolarStation()
+                .withAddress("Bandery 1")
+                .withCapacity(150.0)
+                .withId(1)
+                .withPower(100.0)
+                .withProductionCapacity(123.0)
+                .withTimeOfUsingPanels(15200L)
+                .withType("Static");
+
+        solarStationService.create(List.of(station));
+
         Collection<SolarStation> solars = solarStationService.getAll();
         Assertions.assertNotNull(solars);
         Assertions.assertFalse(solars.isEmpty());
+
+        //solarStationService.deleteById(station.getId());
     }
 
     @Test
     void updateById() throws Exception {
-        Integer lastId = storage.getLastId();
-        SolarStation stationFromCsv = solarStationService.getById(lastId);
+        SolarStation station = new SolarStation()
+                .withAddress("Bandery 1")
+                .withCapacity(150.0)
+                .withId(1)
+                .withPower(150.0)
+                .withProductionCapacity(123.0)
+                .withTimeOfUsingPanels(15200L)
+                .withType("Static");
+
+        solarStationService.create(List.of(station));
+
+        Integer id = station.getId();
+        SolarStation stationFromCsv = solarStationService.getById(id);
         stationFromCsv.setPower(555.0);
         solarStationService.update(stationFromCsv);
-        SolarStation actual = solarStationService.getById(lastId);
+        SolarStation actual = solarStationService.getById(id);
         org.assertj.core.api.Assertions.assertThat(actual)
                 .usingRecursiveComparison()
                 .ignoringFields("power")
                 .isEqualTo(stationFromCsv);
+
+        //solarStationService.deleteById(station.getId());
     }
 }

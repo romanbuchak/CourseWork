@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.lviv.iot.coursework.models.SolarStation;
 import ua.lviv.iot.coursework.service.SolarStationService;
-
 import java.util.Collection;
 
 @RestController
 @RequestMapping("api/solar")
 public class SolarStationController {
-
     private final SolarStationService solarStationService;
 
     @Autowired
@@ -20,17 +18,12 @@ public class SolarStationController {
 
     @PostMapping
     public final Collection<SolarStation> create(@RequestBody Collection<SolarStation> solars) throws Exception {
-        return solarStationService.create(solars, null, false);
+        return solarStationService.create(solars);
     }
 
     @GetMapping("/{id}")
     public final SolarStation getById(@PathVariable final Integer id) {
-//        SolarStation solarStation = solarStationService.getById(id);
-//        if (solarStation == null)
-//            throw new SolarStationNotFoundException("id:" + id);
-//        return solarStation;
         return solarStationService.getById(id);
-
     }
 
     @GetMapping
