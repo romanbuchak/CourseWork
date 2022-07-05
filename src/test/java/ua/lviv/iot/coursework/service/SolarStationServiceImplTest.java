@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SolarStationServiceImplTest {
 
-    SolarStationStorage storage = new SolarStationStorage("src\\test\\resources", "solarStationTest-");
+    SolarStationStorage storage = new SolarStationStorage("src\\test\\resources\\stations", "solarStationTest-");
     SolarStationServiceImpl solarStationService = new SolarStationServiceImpl(storage);
 
     @Test

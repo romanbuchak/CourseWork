@@ -23,7 +23,7 @@ public class SolarPanel {
     }
 
     public final String toCSV() {
-        return String.format("%s, %s, %s, %s, %s,", getId(), getType(), getPower(), getTimeOfUsingPanels(),
+        return String.format("%s, %s, %s, %s, %s", getId(), getType(), getPower(), getTimeOfUsingPanels(),
                 getPrice());
     }
 }
