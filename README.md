@@ -28,15 +28,25 @@ To run the program you need:
 
 **Post**
 api/solar
+api/panel
+api/battery
 
 **getById**
 api/solar/{id}
+api/panel/{id}
+api/battery/{id}
 
 **getAll**
 api/solar
+api/panel
+api/battery
 
 **deleteById**
 api/solar/{id}
+api/panel/{id}
+api/battery/{id}
 
 **update**
 api/solar/{id}
+api/panel/{id}
+api/battery/{id}
