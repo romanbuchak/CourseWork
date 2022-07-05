@@ -2,7 +2,7 @@ package ua.lviv.iot.coursework.storage;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import ua.lviv.iot.coursework.models.SolarStation;
+import ua.lviv.iot.coursework.models.SolarPanel;
 import javax.management.OperationsException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,83 +13,83 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class SolarStationStorage {
+public class SolarPanelStorage {
 
-    private final Map<Integer, SolarStation> stations;
+    private final Map<Integer, SolarPanel> panels;
     private int lastId;
 
     private final String filesFolder;
     private final String fileNamePrefix;
 
-    public SolarStationStorage() {
-        this.filesFolder = "src\\main\\resources\\templates\\stations";
-        this.fileNamePrefix = "solarStation-";
+    public SolarPanelStorage() {
+        this.filesFolder = "src\\main\\resources\\templates\\panels";
+        this.fileNamePrefix = "solarPanel-";
 
-        this.stations = readAllStationsOnInit();
-        this.lastId = getLastId(stations);
+        this.panels = readAllPanelOnInit();
+        this.lastId = getLastId(panels);
     }
 
-    public SolarStationStorage(String filesFolder, String fileNamePrefix) {
+    public SolarPanelStorage(String filesFolder, String fileNamePrefix) {
         this.filesFolder = filesFolder;
         this.fileNamePrefix = fileNamePrefix;
 
-        this.stations = readAllStationsOnInit();
-        this.lastId = getLastId(stations);
+        this.panels = readAllPanelOnInit();
+        this.lastId = getLastId(panels);
     }
 
-    public SolarStationStorage(Map<Integer, SolarStation> stations, String filesFolder, String fileNamePrefix) {
-        this.stations = stations;
+    public SolarPanelStorage(Map<Integer, SolarPanel> panels, String filesFolder, String fileNamePrefix) {
+        this.panels = panels;
         this.filesFolder = filesFolder;
         this.fileNamePrefix = fileNamePrefix;
     }
 
-    private Map<Integer, SolarStation> readAllStationsOnInit() {
+    private Map<Integer, SolarPanel> readAllPanelOnInit() {
         return readAllRecordsByMonth(LocalDate.now())
                 .stream()
                 .collect(Collectors.toMap(
-                        SolarStation::getId,
+                        SolarPanel::getId,
                         Function.identity(),
                         (x, y) -> x
                 ));
     }
 
-    private int getLastId(Map<Integer, SolarStation> stations) {
-        return stations
+    private int getLastId(Map<Integer, SolarPanel> panels) {
+        return panels
                 .values()
                 .stream()
-                .mapToInt(SolarStation::getId)
+                .mapToInt(SolarPanel::getId)
                 .max()
                 .orElse(0);
     }
 
-    public SolarStation getById(int id) {
-        return stations.get(id);
+    public SolarPanel getById(int id) {
+        return panels.get(id);
     }
 
-    public Collection<SolarStation> create(Collection<SolarStation> solars) throws Exception {
-        setCorrectId(solars);
+    public Collection<SolarPanel> create(Collection<SolarPanel> panels) throws Exception {
+        setCorrectId(panels);
 
         String fileName = fileNamePrefix + LocalDate.now() + ".csv";
 
         if (existFileByName(fileName)) {
-            appendToFile(solars, fileName);
+            appendToFile(panels, fileName);
         } else {
-            writeToFile(solars, fileName);
+            writeToFile(panels, fileName);
         }
 
-        for (SolarStation solar : solars) {
-            stations.put(solar.getId(), solar);
+        for (SolarPanel panel : panels) {
+            this.panels.put(panel.getId(), panel);
         }
 
-        return solars;
+        return panels;
     }
 
-    private void appendToFile(Collection<SolarStation> solars, String filename) throws Exception {
+    private void appendToFile(Collection<SolarPanel> panels, String filename) throws Exception {
         String writerResPath = String.format("%s%s%s", filesFolder, File.separator, filename);
 
         try (FileWriter writer = new FileWriter(writerResPath, true)) {
-            for (var solar : solars) {
-                writer.write(solar.toCSV());
+            for (var panel : panels) {
+                writer.write(panel.toCSV());
                 writer.write("\n");
             }
         } catch (Exception e) {
@@ -98,77 +98,77 @@ public class SolarStationStorage {
         }
     }
 
-    private void writeToFile(Collection<SolarStation> solars, String fileName) throws Exception {
+    private void writeToFile(Collection<SolarPanel> panels, String fileName) throws Exception {
         String writerResPath = String.format("%s%s%s", filesFolder, File.separator, fileName);
 
         try (FileWriter writer = new FileWriter(writerResPath)) {
-            writer.write(SolarStation.obtainHeaders());
+            writer.write(SolarPanel.obtainHeaders());
             writer.write("\n");
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw e;
         }
 
-        appendToFile(solars, fileName);
+        appendToFile(panels, fileName);
     }
 
-    public SolarStation update(SolarStation actualSolarStation) throws Exception {
+    public SolarPanel update(SolarPanel actualSolarPanel) throws Exception {
 
-        int stationId = actualSolarStation.getId();
+        int panelId = actualSolarPanel.getId();
 
-        SolarStation stationFromFiles = stations.get(stationId);
+        SolarPanel panelFromFiles = panels.get(panelId);
 
-        if (stationFromFiles == null) {
+        if (panelFromFiles == null) {
             return null;
         }
 
-        File file = getFileWithGivenId(stationId);
+        File file = getFileWithGivenId(panelId);
 
-        Collection<SolarStation> stationsFromFile =
+        Collection<SolarPanel> panelsFromFile =
                 getRecordsFromFile(file.getAbsolutePath())
                         .stream()
-                        .filter(station -> station.getId() != stationId)
+                        .filter(panel -> panel.getId() != panelId)
                         .collect(Collectors.toList());
 
-        stationsFromFile.add(actualSolarStation);
+        panelsFromFile.add(actualSolarPanel);
 
         if (file.delete()) {
-            writeToFile(stationsFromFile, file.getName());
+            writeToFile(panelsFromFile, file.getName());
         } else {
             throw new OperationsException("Cannot delete file:" + file.getName());
         }
 
-        stations.remove(stationId);
-        stations.put(stationId, actualSolarStation);
+        panels.remove(panelId);
+        panels.put(panelId, actualSolarPanel);
 
-        return actualSolarStation;
+        return actualSolarPanel;
     }
 
     public boolean delete(int id) throws Exception {
-        SolarStation stationForDelete = stations.get(id);
+        SolarPanel panelForDelete = panels.get(id);
 
-        if (stationForDelete == null) {
+        if (panelForDelete == null) {
             return false;
         }
 
         File fileToChange = getFileWithGivenId(id);
 
-        Collection<SolarStation> solarStations = getRecordsFromFile(fileToChange.getAbsolutePath());
+        Collection<SolarPanel> solarPanels = getRecordsFromFile(fileToChange.getAbsolutePath());
         String fileName = fileToChange.getName();
 
-        solarStations.remove(stationForDelete);
+        solarPanels.remove(panelForDelete);
         fileToChange.delete();
-        writeToFile(solarStations, fileName);
-        stations.remove(id);
+        writeToFile(solarPanels, fileName);
+        panels.remove(id);
 
         return true;
     }
 
-    public Collection<SolarStation> getAllRecords()  {
-        return stations.values();
+    public Collection<SolarPanel> getAllRecords()  {
+        return panels.values();
     }
 
-    private Set<SolarStation> getRecordsFromFile(String fileAbsolutePath) {
+    private Set<SolarPanel> getRecordsFromFile(String fileAbsolutePath) {
         List<List<String>> lines = new ArrayList<>();
 
         try (Scanner scanner = new Scanner((new File(fileAbsolutePath)))) {
@@ -179,11 +179,11 @@ public class SolarStationStorage {
             e.printStackTrace();
         }
 
-        Set<SolarStation> entities = new HashSet<>();
+        Set<SolarPanel> entities = new HashSet<>();
 
         for (List<String> line : lines) {
             if (!line.isEmpty() && !line.get(0).replaceAll("\\D", "").isEmpty()) {
-                entities.add(fromCSVToEntity(line));
+                entities.add(fromSCVToEntity(line));
             }
         }
         return entities;
@@ -200,25 +200,23 @@ public class SolarStationStorage {
         return values;
     }
 
-    private SolarStation fromCSVToEntity(List<String> fields) {
-        SolarStation solarStation = new SolarStation();
+    private SolarPanel fromSCVToEntity(List<String> fields) {
+        SolarPanel solarPanel = new SolarPanel();
 
-        solarStation.setId(Integer.parseInt(fields.get(0)));
-        solarStation.setType(fields.get(1));
-        solarStation.setPower(Double.parseDouble(fields.get(2)));
-        solarStation.setCapacity(Double.parseDouble(fields.get(3)));
-        solarStation.setTimeOfUsingPanels(Long.parseLong(fields.get(4)));
-        solarStation.setAddress(fields.get(5));
-        solarStation.setProductionCapacity(Double.parseDouble(fields.get(6)));
-        return solarStation;
+        solarPanel.setId(Integer.parseInt(fields.get(0)));
+        solarPanel.setType(fields.get(1));
+        solarPanel.setPower(Double.parseDouble(fields.get(2)));
+        solarPanel.setTimeOfUsingPanels(Long.parseLong(fields.get(3)));
+        solarPanel.setPrice(Double.parseDouble(fields.get(4)));
+        return solarPanel;
     }
 
-    private void setCorrectId(Collection<SolarStation> solarStations) {
+    private void setCorrectId(Collection<SolarPanel> solarPanels) {
         int lastId = this.lastId;
 
-        for (SolarStation station : solarStations) {
+        for (SolarPanel panel : solarPanels) {
             lastId++;
-            station.setId(lastId);
+            panel.setId(lastId);
         }
 
         this.lastId = lastId;
@@ -248,11 +246,11 @@ public class SolarStationStorage {
 
     private File getFileWithGivenId(Integer id) {
         List<File> allFiles = getAllFiles();
-        Assert.notNull(allFiles, "There are no files with solar Station");
+        Assert.notNull(allFiles, "There are no files with solar Panel");
         if (!allFiles.isEmpty()) {
             for (File file : allFiles) {
-                Collection<SolarStation> solarStations = getRecordsFromFile(file.getAbsolutePath());
-                if (solarStations.stream().anyMatch(solarStation -> solarStation.getId().equals(id))) {
+                Collection<SolarPanel> solarPanels = getRecordsFromFile(file.getAbsolutePath());
+                if (solarPanels.stream().anyMatch(solarPanel -> solarPanel.getId().equals(id))) {
                     return file;
                 }
             }
@@ -260,7 +258,7 @@ public class SolarStationStorage {
         return null;
     }
 
-    private Set<SolarStation> readAllRecordsByMonth(LocalDate date) {
+    private Set<SolarPanel> readAllRecordsByMonth(LocalDate date) {
         List<File> files = getAllFiles();
 
         if (files == null) {
