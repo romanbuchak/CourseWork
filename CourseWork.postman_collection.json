@@ -163,6 +163,97 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:8080/api/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localHost:8080/apa/panel",
+					"host": [
+						"localHost"
+					],
+					"port": "8080",
+					"path": [
+						"apa",
+						"panel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get panel by id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get all panel",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete panel by id",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get battery by id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get all batteries",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete battery by id",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
